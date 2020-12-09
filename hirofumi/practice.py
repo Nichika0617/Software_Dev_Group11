@@ -5,7 +5,7 @@ import os
 
 os.chdir(os.path.dirname(__file__))
 
-#画面表示
+#画面表示a
 root = tkinter.Tk()
 #背景画像
 
