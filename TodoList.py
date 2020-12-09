@@ -1,7 +1,10 @@
-print("Hello group11")
+import tkinter as tk
 
- #HelloPY
 
-print("今日は11/19．GitHubの使い方")
+root = tk.Tk()                # 窓を作る
+root.title("ToDoリスト")   # 窓のタイトルを設定
+root.geometry("640x480")      # 窓の大きさを設定
 
-print("これは練習")
+label = tk.Label(root, text="\n \n やっとtkinterが動きました")
+label.pack()
+root.mainloop()
