@@ -7,19 +7,7 @@ os.chdir(os.path.dirname(__file__))
 
 #画面表示a
 root = tkinter.Tk()
-#背景画像
 
-#ファイルを参照
-back = tkinter.PhotoImage(file="watercolor.png")
-
-#画像の大きさを調整
-canvas = tkinter.Canvas(bg="black", width=400, height=400)
-
-#画像の位置を設定
-canvas.place(x=0, y=0)
-
-#画像を表示する
-canvas.create_image(0, 0, image=back, anchor=tkinter.NW)
 #ウィンドウの名前を設定
 root.title("todo_app")
 
