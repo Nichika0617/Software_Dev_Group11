@@ -1,3 +1,4 @@
+# -*- coding: utf-8 ^*^
 from tkinter import messagebox as tkMessageBox
 import sys
 import tkinter
