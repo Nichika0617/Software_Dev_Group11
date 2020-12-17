@@ -2,7 +2,7 @@ from tkinter import messagebox as tkMessageBox
 import sys
 import tkinter
 import os
-
+#
 os.chdir(os.path.dirname(__file__))
 
 #画面表示
