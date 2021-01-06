@@ -15,7 +15,7 @@ task_list = [0,0,0,0,0,0,0]
 
 #タスクを追加する関数
 def AddTask(num):
-    taskfont = font.Font(family="Times New Roman",size=15) #フォント作成
+    #taskfont = font.Font(family="Times New Roman",size=15) #フォント作成
     #inputText = textBox.get("1.0","end-1c") #1行めの0文字目からテキストボックスの終わりまで．
     #end-01cでは最後まで読み，最後の改行を削除．"END"のみでは駄目．
     i = 0
@@ -262,7 +262,25 @@ def LoadData():
         print(rinputText7+"を，タスク"+str(7)+"に追加します．")
         task7_entry.configure(state="normal")
         task7_entry.insert(tkinter.END,rinputText7)
-        task7_entry.configure(state="readonly") #追加したタスクを書き換えられないように．     
+        task7_entry.configure(state="readonly") #追加したタスクを書き換えられないように． 
+
+        if len(task1_entry.get()) != 0:  #ロードした時に，空だったならば．
+            task_list[0] = 1
+        if len(task2_entry.get()) != 0:  
+            task_list[1] = 1
+        if len(task3_entry.get()) != 0:
+            task_list[2] = 1
+        if len(task4_entry.get()) != 0:
+            task_list[3] = 1
+        if len(task5_entry.get()) != 0:
+            task_list[4] = 1
+        if len(task6_entry.get()) != 0:
+            task_list[5] = 1
+        if len(task7_entry.get()) != 0:  # empty!
+            task_list[6] = 1
+        print(task_list)
+
+            
 
 
 #ウィンドウを閉じる関数
@@ -301,39 +319,67 @@ def check(event):
 
     if Val1.get() == True:
         text += "1 を達成!\n"
+        task1_entry.configure(state="normal")
+        task1_entry.delete("0","end")
+        task1_entry.configure(state="readonly")
+        task_list[0] = 0 #0番目がタスクの1番目
     else:
         text += "1 未達成.\n"
 
     if Val2.get() == True:
         text += "2 を達成!\n"
+        task2_entry.configure(state="normal")
+        task2_entry.delete("0","end")
+        task2_entry.configure(state="readonly")
+        task_list[1] = 0
     else:
         text += "2 未達成.\n"
 
     if Val3.get() == True:
         text += "3 を達成!\n"
+        task3_entry.configure(state="normal")
+        task3_entry.delete("0","end")
+        task3_entry.configure(state="readonly")
+        task_list[2] = 0
     else:
         text += "3 未達成.\n"
 
     if Val4.get() == True:
         text += "4 を達成!\n"
+        task4_entry.configure(state="normal")
+        task4_entry.delete("0","end")
+        task4_entry.configure(state="readonly")
+        task_list[3] = 0
     else:
         text += "4 未達成.\n"
 
     if Val5.get() == True:
         text += "5 を達成!\n"
+        task5_entry.configure(state="normal")
+        task5_entry.delete("0","end")
+        task5_entry.configure(state="readonly")
+        task_list[4] = 0
     else:
         text += "5 未達成.\n"
 
     if Val6.get() == True:
         text += "6 を達成!\n"
+        task6_entry.configure(state="normal")
+        task6_entry.delete("0","end")
+        task6_entry.configure(state="readonly")
+        task_list[5] = 0
     else:
         text += "6 未達成.\n"
 
     if Val7.get() == True:
         text += "7 を達成!\n"
+        task7_entry.configure(state="normal")
+        task7_entry.delete("0","end")
+        task7_entry.configure(state="readonly")
+        task_list[6] = 0
     else:
         text += "7 未達成.\n"
-
+    
     tkMessageBox.showinfo('タスク状況',text)
 
 ################################################
@@ -370,12 +416,12 @@ useExplanation.place(x=450, y=120)
 
 """
 textBox = tkinter.Text(root,wrap=tkinter.CHAR,width=55)
-'''
+
 wrap=tk.NONE にすると、テキストが折り返しされない
 wrap=tk.CHAR で文字単位でテキストが折り返される。
 wrap=tk.WORD で単語単位でテキストが折り返される．
 今回は文字単位のCHAR
-'''
+
 textBox.place(relx=0.505, rely=0.1)
 root.columnconfigure(0, weight=1) #テキストボックスをウィンドウサイズに合わせて伸縮させる．
 root.rowconfigure(0, weight=1)#テキストボックスをウィンドウサイズに合わせて伸縮させる．
@@ -448,7 +494,7 @@ quit_buttom.place(x=680, y=420)
 load_buttom = tkinter.Button(text="ロード",width=10,command=LoadData)
 load_buttom.place(x=420, y=420)
 
-# エントリー(テキストボックス)
+# エントリー(右側のテキストボックス)
 textBox = tkinter.Entry(width=45)
 textBox.place(x=420, y=50)
 textBox.insert(tkinter.END,"ここにタスクを入力して，[追加]ボタンでタスクを追加")
@@ -458,7 +504,7 @@ inText = input()
 textBox.insert(0,inText) #0文字目から
 """
 
-#タスクを表示する用のエントリー(テキストボックス)
+#タスクを表示する用のエントリー(左側の閲覧用テキストボックス)
 task1_entry = tkinter.Entry(width=43)
 task1_entry.place(x=40, y=50)
 task1_entry.configure(state='readonly')
