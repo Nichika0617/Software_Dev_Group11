@@ -34,7 +34,7 @@ def AddTask(num):
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
                         print("タスクが全部埋まっています．")
                     else:
-                        if len(inputText1_1) <= 2:
+                        if len(inputText1_1) <= 2 and len(inputText1_1) > 0 and int(inputText1_2) <= 31:
                             print(inputText1+"を，タスク"+str(i+1)+"に追加します．")
                             task1_entry.configure(state="normal")
                             inputTask = str(dt_now.month) + "/" + inputText1_1 +" "+ ":" + " " + inputText1
@@ -42,10 +42,6 @@ def AddTask(num):
                             task1_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
                             task_list[i] = 1
                             textBox1.delete(0, tkinter.END)
-                        else:
-                            tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(textBox1.get())+" 」")
-
-                        
                         
                         
                     """
