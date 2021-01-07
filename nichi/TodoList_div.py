@@ -360,7 +360,11 @@ def Deadline(event):
     now_day = dt_now.day
     #print(now_day) #7と出力されてます 1/7
     
-
+def Sort():#まだ途中です．1/7 19:33 nichi
+    a = task1_entry.get()
+    x = a.split("/")
+    y = x[1].split(":")
+    print(int(y[0]))
 
 #ウィンドウを閉じる関数
 def QuitApp():
