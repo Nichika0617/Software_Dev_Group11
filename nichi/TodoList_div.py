@@ -192,79 +192,83 @@ def DeleteTask():
 
 def LoadData():
     print("前回の入力を読み込みます．")
-    with open('todo.pickle', 'rb') as f: #リード，バイナリ
-        ######task1の処理#####
-        rinputText1 = pickle.load(f)
-        task1_entry.configure(state="normal")
-        task1_entry.delete("0","end")
-        task1_entry.configure(state="readonly")
-        #print(rinputText1)
-        print(rinputText1+"を，タスク"+str(1)+"に追加します．")
-        task1_entry.configure(state="normal")
-        task1_entry.insert(tkinter.END,rinputText1)
-        task1_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
+    try:
+        with open('todo.pickle', 'rb') as f: #リード，バイナリ
+            ######task1の処理#####
+            rinputText1 = pickle.load(f)
+            task1_entry.configure(state="normal")
+            task1_entry.delete("0","end")
+            task1_entry.configure(state="readonly")
+            #print(rinputText1)
+            print(rinputText1+"を，タスク"+str(1)+"に追加します．")
+            task1_entry.configure(state="normal")
+            task1_entry.insert(tkinter.END,rinputText1)
+            task1_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
+            
+            ######task2の処理#####
+            rinputText2 = pickle.load(f)
+            task2_entry.configure(state="normal")
+            task2_entry.delete("0","end")
+            task2_entry.configure(state="readonly")
+            print(rinputText2+"を，タスク"+str(2)+"に追加します．")
+            task2_entry.configure(state="normal")
+            task2_entry.insert(tkinter.END,rinputText2)
+            task2_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
         
-        ######task2の処理#####
-        rinputText2 = pickle.load(f)
-        task2_entry.configure(state="normal")
-        task2_entry.delete("0","end")
-        task2_entry.configure(state="readonly")
-        print(rinputText2+"を，タスク"+str(2)+"に追加します．")
-        task2_entry.configure(state="normal")
-        task2_entry.insert(tkinter.END,rinputText2)
-        task2_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
-    
-        ######task3の処理#####
-        rinputText3 = pickle.load(f)
-        task3_entry.configure(state="normal")
-        task3_entry.delete("0","end")
-        task3_entry.configure(state="readonly")
-        print(rinputText3+"を，タスク"+str(3)+"に追加します．")
-        task3_entry.configure(state="normal")
-        task3_entry.insert(tkinter.END,rinputText3)
-        task3_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
+            ######task3の処理#####
+            rinputText3 = pickle.load(f)
+            task3_entry.configure(state="normal")
+            task3_entry.delete("0","end")
+            task3_entry.configure(state="readonly")
+            print(rinputText3+"を，タスク"+str(3)+"に追加します．")
+            task3_entry.configure(state="normal")
+            task3_entry.insert(tkinter.END,rinputText3)
+            task3_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
 
-        ######task4の処理#####
-        rinputText4 = pickle.load(f)
-        task4_entry.configure(state="normal")
-        task4_entry.delete("0","end")
-        task4_entry.configure(state="readonly")
-        print(rinputText4+"を，タスク"+str(4)+"に追加します．")
-        task4_entry.configure(state="normal")
-        task4_entry.insert(tkinter.END,rinputText4)
-        task4_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
+            ######task4の処理#####
+            rinputText4 = pickle.load(f)
+            task4_entry.configure(state="normal")
+            task4_entry.delete("0","end")
+            task4_entry.configure(state="readonly")
+            print(rinputText4+"を，タスク"+str(4)+"に追加します．")
+            task4_entry.configure(state="normal")
+            task4_entry.insert(tkinter.END,rinputText4)
+            task4_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
 
-        ######task5の処理#####
-        rinputText5 = pickle.load(f)
-        task5_entry.configure(state="normal")
-        task5_entry.delete("0","end")
-        task5_entry.configure(state="readonly")
-        print(rinputText5+"を，タスク"+str(5)+"に追加します．")
-        task5_entry.configure(state="normal")
-        task5_entry.insert(tkinter.END,rinputText5)
-        task5_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
+            ######task5の処理#####
+            rinputText5 = pickle.load(f)
+            task5_entry.configure(state="normal")
+            task5_entry.delete("0","end")
+            task5_entry.configure(state="readonly")
+            print(rinputText5+"を，タスク"+str(5)+"に追加します．")
+            task5_entry.configure(state="normal")
+            task5_entry.insert(tkinter.END,rinputText5)
+            task5_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
 
-        ######task6の処理#####
-        rinputText6 = pickle.load(f)
-        task6_entry.configure(state="normal")
-        task6_entry.delete("0","end")
-        task6_entry.configure(state="readonly")
-        print(rinputText6+"を，タスク"+str(6)+"に追加します．")
-        task6_entry.configure(state="normal")
-        task6_entry.insert(tkinter.END,rinputText6)
-        task6_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
+            ######task6の処理#####
+            rinputText6 = pickle.load(f)
+            task6_entry.configure(state="normal")
+            task6_entry.delete("0","end")
+            task6_entry.configure(state="readonly")
+            print(rinputText6+"を，タスク"+str(6)+"に追加します．")
+            task6_entry.configure(state="normal")
+            task6_entry.insert(tkinter.END,rinputText6)
+            task6_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
 
-        ######task7の処理#####
-        rinputText7 = pickle.load(f)
-        task7_entry.configure(state="normal")
-        task7_entry.delete("0","end")
-        task7_entry.configure(state="readonly")
-        print(rinputText7+"を，タスク"+str(7)+"に追加します．")
-        task7_entry.configure(state="normal")
-        task7_entry.insert(tkinter.END,rinputText7)
-        task7_entry.configure(state="readonly") #追加したタスクを書き換えられないように． 
-
-        if len(task1_entry.get()) != 0:  #ロードした時に，空だったならば．
+            ######task7の処理#####
+            rinputText7 = pickle.load(f)
+            task7_entry.configure(state="normal")
+            task7_entry.delete("0","end")
+            task7_entry.configure(state="readonly")
+            print(rinputText7+"を，タスク"+str(7)+"に追加します．")
+            task7_entry.configure(state="normal")
+            task7_entry.insert(tkinter.END,rinputText7)
+            task7_entry.configure(state="readonly") #追加したタスクを書き換えられないように． 
+    except FileNotFoundError:
+        tkMessageBox.showinfo('エラー',"ファイルが見つかりません．\n一度[終了]ボタンを押すことでファイルを作成することができます．\n作成したことがある場合は，同じディレクトリにファイルがあることを確認してください．")
+        print("ファイルが見つかりません．")
+        ######tasklistの処理#####
+        if len(task1_entry.get()) != 0:  #ロードした時に，空じゃないならば，それは以前何かを入力したものであるので，入力ずみ(1)とする
             task_list[0] = 1
         if len(task2_entry.get()) != 0:  
             task_list[1] = 1
