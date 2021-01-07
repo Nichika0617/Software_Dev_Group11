@@ -20,22 +20,19 @@ def AddTask(num):
     #inputText = textBox.get("1.0","end-1c") #1行めの0文字目からテキストボックスの終わりまで．
     #end-01cでは最後まで読み，最後の改行を削除．"END"のみでは駄目．
     i = 0
-    error_count = 0 #エラー条件に2つ引っかかったものに対して，エラーの表示を一つにするためのフラグに使用する．
     try:
         while True:
             if task_list[i] == 0: #最初は0番目が0 = タスクが一つもないならば，一番上にタスクを表示．2番目が0なら，3番目が0なら・・
                 if i+1 == 1: # i は配列にも対応するため0から始まる．＋1してタスク数と同じように．(0+1が1番目となる)
                     inputText1 = textBox.get()
-                    inputText1_1 = task_deadline.get()
+                    inputText1_1 = textBox1.get()
                     try:
                         inputText1_2 = int(inputText1_1)
                     except ValueError:
-                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                        error_count = 1
+                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(textBox1.get())+" 」")
                     if len(inputText1) <= 1:
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
-                        print("タスクが短すぎます．")
-                        error_count = 1
+                        print("タスクが全部埋まっています．")
                     else:
                         if len(inputText1_1) <= 2 and len(inputText1_1) > 0 and int(inputText1_2) <= 31:
                             print(inputText1+"を，タスク"+str(i+1)+"に追加します．")
@@ -44,12 +41,9 @@ def AddTask(num):
                             task1_entry.insert(tkinter.END,inputTask)
                             task1_entry.configure(state="readonly") #追加したタスクを書き換えられないように．
                             task_list[i] = 1
-                            textBox.delete("0","end") #テキストボックスの内容を削除
-                        else:
-                            if error_count == 0: #まだエラーを一つも出していないならば，
-                                tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                            else:
-                                pass #何もしない               
+                            textBox1.delete(0, tkinter.END)
+                        
+                        
                     """
                     task1 = tkinter.Label(root,text=inputText1,font=taskfont)
                     task1.place(x=40, y=50+40*i)
@@ -57,30 +51,15 @@ def AddTask(num):
                     """
                 elif i+1 == 2:
                     inputText2 = textBox.get()
-                    inputText2_1 = task_deadline.get()
-                    try:
-                        inputText2_2 = int(inputText2_1)
-                    except ValueError:
-                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                        error_count = 1
                     if len(inputText2) <= 1:
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
-                        print("タスクが短すぎます．")
-                        error_count = 1
+                        print("タスクが全部埋まっています．")
                     else:
-                        if len(inputText2_1) <= 2 and len(inputText2_1) >0 and int(inputText1_2) <= 31:
-                            print(inputText2+"を，タスク"+str(i+1)+"に追加します．")
-                            task2_entry.configure(state="normal")
-                            inputTask = str(dt_now.month) + "/" + inputText2_1 +" "+ ":" + " " + inputText2
-                            task2_entry.insert(tkinter.END,inputTask)
-                            task2_entry.configure(state="readonly")
-                            task_list[i] = 1
-                            textBox.delete("0","end") #テキストボックスの内容を削除
-                        else:
-                            if error_count == 0: #まだエラーを一つも出していないならば，
-                                tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                            else:
-                                pass #何もしない      
+                        print(inputText2+"を，タスク"+str(i+1)+"に追加します．")
+                        task2_entry.configure(state="normal")
+                        task2_entry.insert(tkinter.END,inputText2)
+                        task2_entry.configure(state="readonly")
+                        task_list[i] = 1
                     """
                     task2 = tkinter.Label(root,text=inputText2,font=taskfont)
                     task2.place(x=40, y=50+40*i)
@@ -88,30 +67,15 @@ def AddTask(num):
                     
                 elif i+1 == 3:
                     inputText3 = textBox.get()
-                    inputText3_1 = task_deadline.get()
-                    try:
-                        inputText3_2 = int(inputText3_1)
-                    except ValueError:
-                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                        error_count = 1
                     if len(inputText3) <= 1:
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
-                        print("タスクが短すぎます．")
-                        error_count = 1
+                        print("タスクが全部埋まっています．")
                     else:
-                        if len(inputText3_1) <= 2 and len(inputText3_1) >0 and int(inputText1_2) <= 31:
-                            print(inputText3+"を，タスク"+str(i+1)+"に追加します．")
-                            task3_entry.configure(state="normal")
-                            inputTask = str(dt_now.month) + "/" + inputText3_1 +" "+ ":" + " " + inputText3
-                            task3_entry.insert(tkinter.END,inputTask)
-                            task3_entry.configure(state="readonly")
-                            task_list[i] = 1
-                            textBox.delete("0","end") #テキストボックスの内容を削除
-                        else:
-                            if error_count == 0: #まだエラーを一つも出していないならば，
-                                tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                            else:
-                                pass #何もしない      
+                        print(inputText3+"を，タスク"+str(i+1)+"に追加します．")
+                        task3_entry.configure(state="normal")
+                        task3_entry.insert(tkinter.END,inputText3)
+                        task3_entry.configure(state="readonly")
+                        task_list[i] = 1
                     """
                     task3 = tkinter.Label(root,text=inputText3,font=taskfont)
                     task3.place(x=40, y=50+40*i)
@@ -119,30 +83,15 @@ def AddTask(num):
                     
                 elif i+1 == 4:
                     inputText4 = textBox.get()
-                    inputText4_1 = task_deadline.get()
-                    try:
-                        inputText4_2 = int(inputText4_1)
-                    except ValueError:
-                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                        error_count = 1
                     if len(inputText4) <= 1:
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
-                        print("タスクが短すぎます．")
-                        error_count = 1
-                    else:
-                        if len(inputText4_1) <= 2 and len(inputText4_1) > 0 and int(inputText1_2) <= 31:
-                            print(inputText4+"を，タスク"+str(i+1)+"に追加します．")
-                            task4_entry.configure(state="normal")
-                            inputTask = str(dt_now.month) + "/" + inputText4_1 +" "+ ":" + " " + inputText4
-                            task4_entry.insert(tkinter.END,inputTask)
-                            task4_entry.configure(state="readonly")
-                            task_list[i] = 1
-                            textBox.delete("0","end") #テキストボックスの内容を削除
-                        else:
-                            if error_count == 0: #まだエラーを一つも出していないならば，
-                                tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                            else:
-                                pass #何もしない      
+                        print("タスクが全部埋まっています．")
+                    else: 
+                        print(inputText4+"を，タスク"+str(i+1)+"に追加します．")
+                        task4_entry.configure(state="normal")
+                        task4_entry.insert(tkinter.END,inputText4)
+                        task4_entry.configure(state="readonly")
+                        task_list[i] = 1
                     """
                     task4 = tkinter.Label(root,text=inputText4,font=taskfont)
                     task4.place(x=40, y=50+40*i)
@@ -150,30 +99,15 @@ def AddTask(num):
 
                 elif i+1 == 5:
                     inputText5 = textBox.get()
-                    inputText5_1 = task_deadline.get()
-                    try:
-                        inputText5_2 = int(inputText5_1)
-                    except ValueError:
-                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                        error_count = 1
                     if len(inputText5) <= 1:
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
-                        print("タスクが短すぎます．")
-                        error_count = 1
+                        print("タスクが全部埋まっています．")
                     else:
-                        if len(inputText5_1) <= 2 and len(inputText5_1) >0 and int(inputText1_2) <= 31:
-                            print(inputText5+"を，タスク"+str(i+1)+"に追加します．")
-                            task5_entry.configure(state="normal")
-                            inputTask = str(dt_now.month) + "/" + inputText5_1 +" "+ ":" + " " + inputText5
-                            task5_entry.insert(tkinter.END,inputTask)
-                            task5_entry.configure(state="readonly")
-                            task_list[i] = 1
-                            textBox.delete("0","end") #テキストボックスの内容を削除
-                        else:
-                            if error_count == 0: #まだエラーを一つも出していないならば，
-                                tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                            else:
-                                pass #何もしない      
+                        print(inputText5+"を，タスク"+str(i+1)+"に追加します．")
+                        task5_entry.configure(state="normal")
+                        task5_entry.insert(tkinter.END,inputText5)
+                        task5_entry.configure(state="readonly")
+                        task_list[i] = 1
                     """
                     task5 = tkinter.Label(root,text=inputText5,font=taskfont)
                     task5.place(x=40, y=50+40*i)
@@ -181,31 +115,15 @@ def AddTask(num):
 
                 elif i+1 == 6:                
                     inputText6 = textBox.get()
-                    inputText6_1 = task_deadline.get()
-                    try:
-                        inputText6_2 = int(inputText6_1)
-                    except ValueError:
-                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                        error_count = 1
                     if len(inputText6) <= 1:
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
-                        print("タスクが短すぎます．")
-                        error_count = 1
+                        print("タスクが全部埋まっています．")
                     else:
-                        if len(inputText6_1) <= 2 and len(inputText6_1) >0 and int(inputText1_2) <= 31:
-                            print(inputText6+"を，タスク"+str(i+1)+"に追加します．")
-                            task6_entry.configure(state="normal")
-                            inputTask = str(dt_now.month) + "/" + inputText6_1 +" "+ ":" + " " + inputText6
-                            task6_entry.insert(tkinter.END,inputTask)
-                            task6_entry.configure(state="readonly")
-                            task_list[i] = 1
-                            textBox.delete("0","end") #テキストボックスの内容を削除
-                        else:
-                            if error_count == 0: #まだエラーを一つも出していないならば，
-                                tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                            else:
-                                pass #何もしない      
-
+                        print(inputText6+"を，タスク"+str(i+1)+"に追加します．")
+                        task6_entry.configure(state="normal")
+                        task6_entry.insert(tkinter.END,inputText6)
+                        task6_entry.configure(state="readonly")
+                        task_list[i] = 1
                     """
                     task6 = tkinter.Label(root,text=inputText6,font=taskfont)
                     task6.place(x=40, y=50+40*i)
@@ -213,37 +131,21 @@ def AddTask(num):
 
                 elif i+1 == 7:
                     inputText7 = textBox.get()
-                    inputText7_1 = task_deadline.get()
-                    try:
-                        inputText7_2 = int(inputText7_1)
-                    except ValueError:
-                        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                        error_count = 1
                     if len(inputText7) <= 1:
                         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
-                        print("タスクが短すぎます．")
-                        error_count = 1
+                        print("タスクが全部埋まっています．")
                     else:
-                        if len(inputText7_1) <= 2 and len(inputText7_1) >0 and int(inputText1_2) <= 31:
-                            print(inputText7+"を，タスク"+str(i+1)+"に追加します．")
-                            task7_entry.configure(state="normal")
-                            inputTask = str(dt_now.month) + "/" + inputText7_1 +" "+ ":" + " " + inputText7
-                            task7_entry.insert(tkinter.END,inputTask)
-                            task7_entry.configure(state="readonly")
-                            task_list[i] = 1
-                            textBox.delete("0","end") #テキストボックスの内容を削除
-                        else:
-                            if error_count == 0: #まだエラーを一つも出していないならば，
-                                tkMessageBox.showinfo('エラー',"正しい期限を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-                            else:
-                                pass #何もしない
-
+                        print(inputText7+"を，タスク"+str(i+1)+"に追加します．")
+                        task7_entry.configure(state="normal")
+                        task7_entry.insert(tkinter.END,inputText7)
+                        task7_entry.configure(state="readonly")
+                        task_list[i] = 1
                     """
                     task7 = tkinter.Label(root,text=inputText7,font=taskfont)
                     task7.place(x=40, y=50+40*i)
                     """
                     
-                task_deadline.delete("0","end")#日付入力ボックスの内容を削除
+                textBox.delete("0","end") #テキストボックスの内容を削除
                 break
             else:
                 i+=1
@@ -389,15 +291,11 @@ def LoadData():
         print(task_list)
 
             
-def Deadline(event):
+def deadline(event):
     now_day = dt_now.day
-    #print(now_day) #7と出力されてます 1/7
+    print(now_day)
     
-def Sort():#まだ途中です．1/7 19:33 nichi
-    a = task1_entry.get()
-    x = a.split("/")
-    y = x[1].split(":")
-    print(int(y[0]))
+
 
 #ウィンドウを閉じる関数
 def QuitApp():
@@ -597,7 +495,7 @@ button1.place(x=60, y=350)
 add_buttom = tkinter.Button(text="タスクを追加",width=10,command=partial(AddTask,1))
 add_buttom.config(bg="#F0F8FF")
 add_buttom.place(x=650, y=350)
-add_buttom.bind("<Button-1>",Deadline)
+add_buttom.bind("<Button-1>",deadline)
 
 #タスク削除ボタン
 #delete_buttom = tkinter.Button(root,text="タスクを削除",width=10,command=partial(AddTask,-1))
@@ -624,9 +522,9 @@ textBox.insert(0,inText) #0文字目から
 """
 
 # エントリー(期限入力)
-task_deadline = tkinter.Entry(width=30)
-task_deadline.place(x=480, y=80)
-task_deadline.insert(tkinter.END,"ここに期限を入力  例(1/7日なら'7'と入力)")
+textBox1 = tkinter.Entry(width=30)
+textBox1.place(x=480, y=80)
+textBox1.insert(tkinter.END,"ここに期限を入力  例(1/7日なら'7'と入力)")
 
 #タスクを表示する用のエントリー(左側の閲覧用テキストボックス)
 task1_entry = tkinter.Entry(width=43)
