@@ -8,6 +8,7 @@ dt_now = datetime.datetime.now() #日付
 from functools import partial #ボタンコマンドに引数を渡す
 import pickle #プログラムを実行し終えたあとも作成したオブジェクトを保存するモジュール．
 import os
+from collections import OrderedDict
 
 os.chdir(os.path.dirname(__file__))#画像ファイルと同じディレクトリへ
 
@@ -40,30 +41,37 @@ Explanation_font = font.Font(family="Helvetica",size=15,weight="bold") #フォ�
 useExplanation = tkinter.Label(root,text=Explanation,font = Explanation_font,foreground='#66cdaa')
 useExplanation.place(x=450, y=120)
 
-dic_toDo = {}
-deadline_list = [0,0,0,0,0,0,0]
-toDoNum = 7 #追加できるtoDoの数
+#番号をkey,toDoをvalueとして辞書化　→　{0:toDo1, 1: toDo2, 2:toDo3, 3:toDo4, 4:toDo, 5:toDo, 6:toDo} #7個の番号はtask_entry[i]に対応させている
+toDo_dic = {0:"", 1:"", 2:"", 3:"", 4: "", 5:"", 6:""} #初期valueは空白
+#番号をkey,日付をvalueとして辞書化　 →  {0:date1, 1:date2, 2:date3, 3:date4, 4:date5, 5:date6, 6:date7} 
+date_dic = {0:31, 1:31, 2:31, 3:31, 4:31, 5:31, 6:31} #初期valueは31日
+toDoNum = 7 #追加できるtoDoの数,task_entryの数に対応
 
 def AddTask():
-    inputText1 = textBox.get()
-    inputText1_1 = task_deadline.get()
+    inputText1 = textBox.get() #toDoを読み込み
+    inputText1_1 = task_deadline.get() #締め切りを読み込み
     error_count = 0
     try:
         inputText1_2 = int(inputText1_1)
     except ValueError:
         tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
         error_count = 1
-    if len(inputText1) <= 1:
+    if len(inputText1) <= 1: #toDoが1文字以下ならエラー
         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
         textBox.delete("0","end") #テキストボックスの内容を削除
         error_count = 1
-    elif error_count == 0:
-        for i in range(toDoNum):
+    elif len(inputText1_1) >= 3 or inputText1_2 <=0 or inputText1_2 >= 32:
+        tkMessageBox.showinfo('エラー',"入力できる範囲は1〜31です.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
+        error_count = 1
+    elif error_count == 0: #エラーが一つもなければエントリーボックスへ出力
+        for i in range(toDoNum): #toDoNum個のエントリーボックスの中身を調べる,toDoNumは7個(task_entryの数)
             if task_entry[i].get() == '':#task_entry[i]の中身が空だったら
                 task_entry[i].configure(state="normal")
                 inputTask = str(dt_now.month) + "/" + inputText1_1 +" "+ ":" + " " + inputText1
-                task_entry[i].insert(tkinter.END,inputTask)
+                task_entry[i].insert(tkinter.END,inputTask) #task_entry[i]へ挿入
                 task_entry[i].configure(state="readonly") #追加したタスクを書き換えられないように．
+                toDo_dic[i] = inputTask    #辞書にtoDo追加
+                date_dic[i] = inputText1_2 #辞書に日付追加
                 textBox.delete("0","end") #テキストボックスの内容を削除
                 break
             elif i == (toDoNum-1):#task_entry[i]の中身がiの範囲全て空ではない場合
@@ -77,23 +85,76 @@ def DeleteTask():
         task_entry[inNum-1].configure(state="normal")
         task_entry[inNum-1].delete("0","end")
         task_entry[inNum-1].configure(state="readonly")
+        toDo_dic[inNum-1] = "" #辞書のkey=iに対応するvalueへ空白を上書き
+        date_dic[inNum-1] = ""
 
 
+def check(event):
+    text = ""
+    for i in range(toDoNum):    
+        if Val[i].get() == True:
+            text += str(i+1)+"を達成!\n"
+            task_entry[i].configure(state="normal")
+            task_entry[i].delete("0","end")
+            task_entry[i].configure(state="readonly")
+        else:
+            text +=  str(i+1)+"未達成.\n"
+    tkMessageBox.showinfo('タスク状況',text)
 
+def QuitApp():
+    with open('todo.pickle', 'wb') as f: #w書き込みモード,bバイナリモード
+        pickle.dump(toDo_dic,f)
+    with open('date.pickle', 'wb') as f: #w書き込みモード,bバイナリモード
+        pickle.dump(date_dic,f)
+    root.destroy()
+
+def LoadData():
+    with open('todo.pickle', 'rb') as f: #リード，バイナリ
+        load_toDo_dic = pickle.load(f)
+    with open('date.pickle', 'rb') as f: #リード，バイナリ
+        load_date_dic = pickle.load(f)
+    for i in range(toDoNum):
+        task_entry[i].configure(state="normal")
+        task_entry[i].delete("0","end")
+        task_entry[i].insert(tkinter.END,load_toDo_dic[i]) #task_entryへtoDoを出力
+        task_entry[i].configure(state="readonly")
+        toDo_dic[i] = load_toDo_dic[i]
+        date_dic[i] = load_date_dic[i]
+"""
+Pythonでは、変数のスコープが代入の有無で変わる
+関数内で代入されている：変数は関数内のローカルスコープに決定
+関数内で代入されていない：変数はグローバルスコープに決定
+らしい。。
+"""
+def dateSort():
+    i = 0
+    sorted_toDo_dic =  {0:"", 1:"", 2:"", 3:"", 4: "", 5:"", 6:""} 
+    sorted_date_dic = OrderedDict(sorted(date_dic.items(), key=lambda x:x[1])) #date_dicをvalueでsort
+    for k, v in sorted_date_dic.items():
+        sorted_toDo_dic[i] = toDo_dic[k] 
+        date_dic[i] = v #ソートされた日付を昇順でいれる
+        i += 1
+    i = 0
+    for i in range(toDoNum):
+        toDo_dic[i] = sorted_toDo_dic[i] #関数内で作ったsorted_toDo_dicをグローバルなtoDo_dicへ反映させる
+        task_entry[i].configure(state="normal")
+        task_entry[i].delete("0","end")
+        task_entry[i].insert(tkinter.END,toDo_dic[i]) #task_entryへtoDoを出力
+        task_entry[i].configure(state="readonly")
 
 #チェックボックス
-box = {}
+box={}
 CheckBox = {}
 Val = {}
 for i in range(toDoNum):
     Val[i] = tkinter.BooleanVar()
-    Val[i].set(False)
+    #Val[i].set(False)
     CheckBox[i] = tkinter.Checkbutton(variable=Val[i])
     CheckBox[i].place(x=20,y=50+(i*40))
     box[i] = tkinter.Label(root,text=str(i+1))
     box[i].place(x=0,y=50+(i*40))
 """
-
+元のやつ
 Val1 = tkinter.BooleanVar()
 Val2 = tkinter.BooleanVar()
 CheckBox1 = tkinter.Checkbutton(variable=Val1)
@@ -105,11 +166,9 @@ CheckBox2.place(x=10, y=90)
 box2 = tkinter.Label(root,text="2")
 box2.place(x=0, y=90)
 """
-
-
 #タスク確認ボタン
 button1 = tkinter.Button(text="タスク確認",width=30)
-button1.bind("<Button-1>")
+button1.bind("<Button-1>",check)
 button1.place(x=60, y=350)
 
 #タスク追加ボタン
@@ -123,12 +182,16 @@ delete_buttom = tkinter.Button(text="タスクを削除",width=10,command=Delete
 delete_buttom.place(x=420, y=350)
 
 #閉じるボタン
-quit_buttom = tkinter.Button(text="終了",width=10)
+quit_buttom = tkinter.Button(text="終了",width=10,command=QuitApp)
 quit_buttom.place(x=680, y=420)
 
 #ロードボタン
-load_buttom = tkinter.Button(text="ロード",width=10)
+load_buttom = tkinter.Button(text="ロード",width=10,command=LoadData)
 load_buttom.place(x=420, y=420)
+
+#ソートボタン
+sort_buttom = tkinter.Button(text="ソート",width=30,command=dateSort)
+sort_buttom.place(x=60, y=420)
 
 # エントリー(右側のテキストボックス)
 textBox = tkinter.Entry(width=40)
@@ -151,6 +214,7 @@ for i in range(toDoNum):
     task_entry[i].place(x=50, y=50+(i*40))
     task_entry[i].configure(state='readonly')
 """
+元のやつ
 task1_entry = tkinter.Entry(width=35)
 task1_entry.place(x=40, y=50)
 task1_entry.configure(state='readonly')
