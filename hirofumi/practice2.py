@@ -85,8 +85,8 @@ def DeleteTask():
         task_entry[inNum-1].configure(state="normal")
         task_entry[inNum-1].delete("0","end")
         task_entry[inNum-1].configure(state="readonly")
-        toDo_dic[inNum-1] = "" #辞書のkey=iに対応するvalueへ空白を上書き
-        date_dic[inNum-1] = ""
+        toDo_dic[inNum-1] = "" #辞書のkey=iに対応するvalueを初期化
+        date_dic[inNum-1] = 32 
 
 
 def check(event):
@@ -97,6 +97,8 @@ def check(event):
             task_entry[i].configure(state="normal")
             task_entry[i].delete("0","end")
             task_entry[i].configure(state="readonly")
+            toDo_dic[i] = "" #辞書のkey=iに対応するvalueを初期化
+            date_dic[i] = 32
         else:
             text +=  str(i+1)+"未達成.\n"
     tkMessageBox.showinfo('タスク状況',text)
