@@ -195,7 +195,7 @@ load_buttom = tkinter.Button(text="ロード",width=10,command=LoadData)
 load_buttom.place(x=420, y=420)
 
 #ソートボタン
-sort_buttom = tkinter.Button(text="ソート",width=30,command=dateSort)
+sort_buttom = tkinter.Button(text="日付順に並び替え",width=30,command=dateSort)
 sort_buttom.place(x=60, y=420)
 
 # エントリー(右側のテキストボックス)
