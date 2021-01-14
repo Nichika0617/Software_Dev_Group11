@@ -3,7 +3,8 @@ from tkinter import messagebox as tkMessageBox
 from tkinter import font
 import sys
 import tkinter
-import datetime 
+import datetime
+dt_now = datetime.datetime.now() #日付
 from functools import partial #ボタンコマンドに引数を渡す
 import pickle #プログラムを実行し終えたあとも作成したオブジェクトを保存するモジュール．
 import os
@@ -29,7 +30,6 @@ root.title(u"todo_app")
 #ウィンドウの大きさを設定
 root.geometry("800x450")
 staticfont = font.Font(family="Helvetica",size=20,weight="bold",) #フォント作成
-dt_now = datetime.datetime.now() #日付
 month = dt_now.month
 static = tkinter.Label(root,text=str(month)+"月のToDoリスト",font = staticfont,foreground='#6595ed') #起動した月を表示
 #年year、月month、日day、時間hour、分minute、秒second、マイクロ秒microsecondを整数intで取得できる。dt_now.dayなど．
@@ -131,6 +131,7 @@ Pythonでは、変数のスコープが代入の有無で変わる
 関数内で代入されていない：変数はグローバルスコープに決定
 らしい。。
 """
+
 def dateSort():
     i = 0
     sorted_toDo_dic =  {0:"", 1:"", 2:"", 3:"", 4: "", 5:"", 6:""}
