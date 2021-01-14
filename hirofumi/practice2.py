@@ -51,20 +51,18 @@ def AddTask():
     inputText1 = textBox.get() #toDoを読み込み
     inputText1_1 = task_deadline.get() #締め切りを読み込み
     error_count = 0
+    try:
+        inputText1_2 = int(inputText1_1)
+    except ValueError:
+        tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
+        error_count = 1
     if len(inputText1) <= 1: #toDoが1文字以下ならエラー
         tkMessageBox.showinfo('エラー',"タスクが短すぎます．正しく入力されているか確認してください．\n入力されたタスク↓↓\n　「 " + str(textBox.get())+" 」")
         textBox.delete("0","end") #テキストボックスの内容を削除
         error_count = 1
-    else:
-        try:
-            inputText1_2 = int(inputText1_1)
-        except ValueError:
-            tkMessageBox.showinfo('エラー',"数字を入力してください.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-            error_count = 1
-    if len(inputText1_1) >= 3 or inputText1_2 <=0 or inputText1_2 >= 32:
-        if error_count != 1: #まだエラーが出ていないならば，(エラー連続表示を防ぐため．)
-            tkMessageBox.showinfo('エラー',"入力できる範囲は1〜31です.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
-            error_count = 1
+    elif len(inputText1_1) >= 3 or inputText1_2 <=0 or inputText1_2 >= 32:
+        tkMessageBox.showinfo('エラー',"入力できる範囲は1〜31です.\n入力された期限↓↓\n　「 " + str(task_deadline.get())+" 」")
+        error_count = 1
     elif error_count == 0: #エラーが一つもなければエントリーボックスへ出力
         for i in range(toDoNum): #toDoNum個のエントリーボックスの中身を調べる,toDoNumは7個(task_entryの数)
             if task_entry[i].get() == '':#task_entry[i]の中身が空だったら
@@ -75,7 +73,6 @@ def AddTask():
                 toDo_dic[i] = inputTask    #辞書にtoDo追加
                 date_dic[i] = inputText1_2 #辞書に日付追加
                 textBox.delete("0","end") #テキストボックスの内容を削除
-                task_deadline.delete("0","end")#日付入力ボックスの内容を削除
                 break
             elif i == (toDoNum-1):#task_entry[i]の中身がiの範囲全て空ではない場合
                 tkMessageBox.showinfo('エラー',"これ以上追加できません．リストからタスクを削除してください．")
@@ -133,7 +130,7 @@ Pythonでは、変数のスコープが代入の有無で変わる
 """
 def dateSort():
     i = 0
-    sorted_toDo_dic =  {0:"", 1:"", 2:"", 3:"", 4: "", 5:"", 6:""}
+    sorted_toDo_dic =  {0:"", 1:"", 2:"", 3:"", 4: "", 5:"", 6:""} 
     sorted_date_dic = OrderedDict(sorted(date_dic.items(), key=lambda x:x[1])) #date_dicをvalueでsort
     for k, v in sorted_date_dic.items():
         sorted_toDo_dic[i] = toDo_dic[k] 

@@ -419,7 +419,7 @@ def QuitApp():
         pickle.dump(inputText6, f)
         pickle.dump(inputText7, f)
         print("入力を，ファイル"+str(f)+"に保存しました．")    
-    root.destroy()
+    root.destroy()#ウィンドウを閉じる
 
 #チェックする関数
 def check(event):
@@ -658,8 +658,6 @@ task7_entry.place(x=40, y=290)
 task7_entry.configure(state='readonly')
 
 ################################################
-
-
 
 #メインループ
 root.mainloop()
