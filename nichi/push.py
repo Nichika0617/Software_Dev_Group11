@@ -7,7 +7,7 @@ import os
  AppleScliptを実行するためのコマンド．
  何も指定しなければスクリプトエディタからの通知となってしまうが，with title　でタイトルを指定できる．
 """
-
+os.chdir(os.path.dirname(__file__))
 dt_now = datetime.datetime.now() #日付
 now_day = dt_now.day
 #年year、月month、日day、時間hour、分minute、秒second、マイクロ秒microsecondを整数intで取得できる。dt_now.dayなど．
@@ -35,4 +35,5 @@ for i in range(toDoNum):
     if diff_Deadline == 1: #1日前に通知を送る．
         pushText += task + "\n"
     
-os.system("osascript -e 'display notification \"{$pushText}\" with title \"todo.app\"'")
+os.system("osascript -e 'display notification \"{}\" with title \"todo.app\"'".format(pushText))
+#通知を送信．
