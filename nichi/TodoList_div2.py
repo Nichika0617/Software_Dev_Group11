@@ -9,9 +9,10 @@ from functools import partial #ボタンコマンドに引数を渡す
 import pickle #プログラムを実行し終えたあとも作成したオブジェクトを保存するモジュール．
 import os
 from collections import OrderedDict
+import cronpi #定時にpush通知を送信するプログラムを実行
+
 
 os.chdir(os.path.dirname(__file__))#画像ファイルと同じディレクトリへ
-
 #処理はこの間に書く．
 #新規ウィンドウ作成
 root = tkinter.Tk()
@@ -199,14 +200,23 @@ load_buttom.place(x=420, y=420)
 sort_buttom = tkinter.Button(text="日付順に並び替え",width=30,command=dateSort)
 sort_buttom.place(x=60, y=420)
 
+
+time = "0:44pm"
+
+cronpi.run_every_day("python3 /Users/e195765/Desktop/2年講義/ソフトウェア開発演習/group11/Software_Dev_Group11/nichi/push.py").on(time)
+print("タスク終了1日前の{}に通知を送信します．".format(time))
+
+
 # エントリー(右側のテキストボックス)
 textBox = tkinter.Entry(width=40)
 textBox.place(x=420, y=50)
 textBox.insert(tkinter.END,"ここにタスクを入力して，[追加]ボタンでタスクを追加")
+
 # エントリー(期限入力)
 task_deadline = tkinter.Entry(width=30)
 task_deadline.place(x=480, y=80)
 task_deadline.insert(tkinter.END,"ここに期限を入力  例(1/7日なら'7'と入力)")
+
 """
 print("追加したいタスクを入力してください") #ターミナルで日本語入力
 inText = input()
@@ -232,3 +242,4 @@ task2_entry.configure(state='readonly')
 
 #メインループ
 root.mainloop()
+
