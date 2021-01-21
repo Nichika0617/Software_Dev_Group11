@@ -108,7 +108,7 @@ def DeleteTask():
         task_entry[inNum-1].configure(state="readonly")
         toDo_dic[inNum-1] = "" #辞書のkey=iに対応するvalueを初期化
         date_dic[inNum-1] = 32 
-        task_entry[inNum-1].destroy()
+        
 
 
 def check(event):
