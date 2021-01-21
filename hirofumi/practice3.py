@@ -126,11 +126,14 @@ def check(event):
     tkMessageBox.showinfo('タスク状況',text)
 
 def QuitApp():
+    root.destroy()
+
+def store():
     with open('todo.pickle', 'wb') as f: #w書き込みモード,bバイナリモード
         pickle.dump(toDo_dic,f)
     with open('date.pickle', 'wb') as f: #w書き込みモード,bバイナリモード
         pickle.dump(date_dic,f)
-    root.destroy()
+    
 
 def LoadData():
     with open('todo.pickle', 'rb') as f: #リード，バイナリ
@@ -197,8 +200,12 @@ delete_buttom = ttk.Button(frame1,text="タスクを削除",width=10,command=lam
 delete_buttom.place(x=420, y=350)
 
 #保存ボタン
-quit_buttom = ttk.Button(frame1,text="保存して終了",width=10,command=lambda : QuitApp())
-quit_buttom.place(x=680, y=420)
+store_buttom = ttk.Button(frame1,text="保存",width=10,command=lambda : store())
+store_buttom.place(x=680, y=420)
+
+#終了ボタン
+quit_buttom = ttk.Button(frame1,text="終了",width=10,command=lambda : QuitApp())
+quit_buttom.place(x=550, y=420)
 
 #ロードボタン
 load_buttom = ttk.Button(frame1,text="ロード",width=10,command=lambda : LoadData())
