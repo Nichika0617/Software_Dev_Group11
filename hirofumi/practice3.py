@@ -2,46 +2,61 @@
 from tkinter import messagebox as tkMessageBox
 from tkinter import font
 from tkinter import ttk
-import sys
-import tkinter
-import datetime
+import sys,tkinter,datetime,pickle,os
 dt_now = datetime.datetime.now() #日付
 from functools import partial #ボタンコマンドに引数を渡す
-import pickle #プログラムを実行し終えたあとも作成したオブジェクトを保存するモジュール．
-import os
 from collections import OrderedDict
-import cronpi
+
 os.chdir(os.path.dirname(__file__))#画像ファイルと同じディレクトリへ
 
-
-
-#処理はこの間に書く．
-#新規ウィンドウ作成
 root = tkinter.Tk()
+root.title(u"todo_app")
+root.geometry("800x450")
+
+#main_frameの設定
+main_frame = tkinter.Frame(width=800,height=450)
+main_frame.grid(row=0, column=0, sticky="nsew")#frameを重ねる
+
+#背景画像
+#ファイルを参照．ppmファイルなら表示可能
+main_back = tkinter.PhotoImage(file="cat.ppm")
+#画像の大きさを調整
+canvas = tkinter.Canvas(main_frame,bg="black", width=800, height=450)
+#画像の位置を設定
+canvas.place(x=0, y=0)
+#画像を表示する
+canvas.create_image(0, 0, image=main_back, anchor=tkinter.NW)
+
+changePageButton = tkinter.Button(main_frame, text="ToDoリスト",width=10,height=5, command=lambda : changePage(frame1))
+changePageButton.place(x=350,y=350)
+
+#frame1の設定
+frame1 = tkinter.Frame(width=800,height=450)
+frame1.grid(row=0, column=0, sticky="nsew")
+frame1.propagate(0)
+changePageButton = tkinter.Button(frame1, text="back", command=lambda : changePage(main_frame))
+changePageButton.place(x=760,y=0)
+
 #背景画像
 #ファイルを参照．ppmファイルなら表示可能
 back = tkinter.PhotoImage(file="watercolor.ppm")
 #画像の大きさを調整
-canvas = tkinter.Canvas(bg="black", width=400, height=400)
+canvas = tkinter.Canvas(frame1,bg="black", width=400, height=400)
 #画像の位置を設定
 canvas.place(x=0, y=0)
 #画像を表示する
 canvas.create_image(0, 0, image=back, anchor=tkinter.NW)
 
-#ウィンドウの名前を設定
-root.title(u"todo_app")
-#ウィンドウの大きさを設定
-root.geometry("800x450")
 staticfont = font.Font(family="Helvetica",size=20,weight="bold",) #フォント作成
 month = dt_now.month
-static = tkinter.Label(root,text=str(month)+"月のToDoリスト",font = staticfont,foreground='#6595ed') #起動した月を表示
+static = tkinter.Label(frame1,text=str(month)+"月のToDoリスト",font = staticfont,foreground='#6595ed') #起動した月を表示
 #年year、月month、日day、時間hour、分minute、秒second、マイクロ秒microsecondを整数intで取得できる。dt_now.dayなど．
 static.place(x=120, y=10)
-textBox = tkinter.Label(root,text="ToDoタスクを入力↓↓",font = staticfont,foreground='#ffa500')
+textBox = tkinter.Label(frame1,text="ToDoタスクを入力↓↓",font = staticfont,foreground='#ffa500')
 textBox.place(x=500, y=10)
 Explanation = "入力\n追加したいタスクを入力して\n[タスクを追加]ボタンをクリックすると，\nToDoリストに上から順番に追加されます．\n\n削除\n消したいタスクの番号のみを入力して，\n[タスクの削除]ボタンをクリックすると\nその番号のタスクを消すことができます．"
 Explanation_font = font.Font(family="Helvetica",size=15,weight="bold") #フォント作成
-useExplanation = tkinter.Label(root,text=Explanation,font = Explanation_font,foreground='#66cdaa')
+useExplanation = tkinter.Label(frame1,text=Explanation,font = Explanation_font,foreground='#66cdaa')
 useExplanation.place(x=450, y=120)
 
 #番号をkey,toDoをvalueとして辞書化　→　{0:toDo1, 1: toDo2, 2:toDo3, 3:toDo4, 4:toDo, 5:toDo, 6:toDo} #7個の番号はtask_entry[i]に対応させている
@@ -93,6 +108,7 @@ def DeleteTask():
         task_entry[inNum-1].configure(state="readonly")
         toDo_dic[inNum-1] = "" #辞書のkey=iに対応するvalueを初期化
         date_dic[inNum-1] = 32 
+        task_entry[inNum-1].destroy()
 
 
 def check(event):
@@ -150,67 +166,62 @@ def dateSort():
         task_entry[i].insert(tkinter.END,toDo_dic[i]) #task_entryへtoDoを出力
         task_entry[i].configure(state="readonly")
 
-#チェックボックス
-box={}
-CheckBox = {}
-Val = {}
+
+def changePage(page):
+    '''
+    画面遷移用の関数
+    '''
+    page.tkraise()
+
+box,CheckBox,Val={},{},{}
 for i in range(toDoNum):
     Val[i] = tkinter.BooleanVar()
     #Val[i].set(False)
-    CheckBox[i] = ttk.Checkbutton(variable=Val[i])
+    CheckBox[i] = ttk.Checkbutton(frame1,variable=Val[i])
     CheckBox[i].place(x=20,y=50+(i*40))
-    box[i] = tkinter.Label(root,text=str(i+1))
+    box[i] = ttk.Label(frame1,text=str(i+1))
     box[i].place(x=0,y=50+(i*40))
 
 #タスク確認ボタン
-button1 = tkinter.Button(text="タスク確認",width=30)
+button1 = ttk.Button(frame1,text="タスク確認",width=30)
 button1.bind("<Button-1>",check)
 button1.place(x=60, y=350)
 
 #タスク追加ボタン
-add_buttom = ttk.Button(text="タスクを追加",width=15,command=AddTask)
-
+add_buttom = ttk.Button(frame1,text="タスクを追加",width=15,command=lambda : AddTask())
 add_buttom.place(x=630, y=350)
 
 #タスク削除ボタン
 #delete_buttom = tkinter.Button(root,text="タスクを削除",width=15,command=partial(AddTask,-1))
-delete_buttom = ttk.Button(text="タスクを削除",width=10,command=DeleteTask)
+delete_buttom = ttk.Button(frame1,text="タスクを削除",width=10,command=lambda : DeleteTask())
 delete_buttom.place(x=420, y=350)
 
-#閉じるボタン
-quit_buttom = ttk.Button(text="終了",width=10,command=QuitApp)
+#保存ボタン
+quit_buttom = ttk.Button(frame1,text="保存して終了",width=10,command=lambda : QuitApp())
 quit_buttom.place(x=680, y=420)
 
 #ロードボタン
-load_buttom = ttk.Button(text="ロード",width=10,command=LoadData)
+load_buttom = ttk.Button(frame1,text="ロード",width=10,command=lambda : LoadData())
 load_buttom.place(x=420, y=420)
 
 #ソートボタン
-sort_buttom = ttk.Button(text="日付順に並び替え",width=30,command=dateSort)
+sort_buttom = ttk.Button(frame1,text="日付順に並び替え",width=30,command=lambda : dateSort())
 sort_buttom.place(x=60, y=420)
 
 # エントリー(右側のテキストボックス)
-textBox = ttk.Entry(width=40)
+textBox = ttk.Entry(frame1,width=40)
 textBox.place(x=420, y=50)
 textBox.insert(tkinter.END,"ここにタスクを入力して，[追加]ボタンでタスクを追加")
 # エントリー(期限入力)
-task_deadline = ttk.Entry(width=30)
+task_deadline = ttk.Entry(frame1,width=30)
 task_deadline.place(x=480, y=80)
 task_deadline.insert(tkinter.END,"ここに期限を入力  例(1/7日なら'7'と入力)")
-"""
-print("追加したいタスクを入力してください") #ターミナルで日本語入力
-inText = input()
-textBox.insert(0,inText) #0文字目から
-"""
 
-#タスクを表示する用のエントリー(左側の閲覧用テキストボックス)
 task_entry = {}
 for i in range(toDoNum):
-    task_entry[i] = ttk.Entry(width=35)
+    task_entry[i] = ttk.Entry(frame1,width=35,)
     task_entry[i].place(x=50, y=50+(i*40))
     task_entry[i].configure(state='readonly')
 
-################################################
-
-#メインループ
+main_frame.tkraise()#最初に出てくるframeを設定
 root.mainloop()
