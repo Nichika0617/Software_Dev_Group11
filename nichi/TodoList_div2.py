@@ -201,7 +201,7 @@ sort_buttom = tkinter.Button(text="日付順に並び替え",width=30,command=da
 sort_buttom.place(x=60, y=420)
 
 
-time = "0:44pm"
+time = "10:40pm"
 
 cronpi.run_every_day("python3 /Users/e195765/Desktop/2年講義/ソフトウェア開発演習/group11/Software_Dev_Group11/nichi/push.py").on(time)
 print("タスク終了1日前の{}に通知を送信します．".format(time))

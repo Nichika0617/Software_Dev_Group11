@@ -176,6 +176,7 @@ def dateSort():
         task_entry[i].delete("0","end")
         task_entry[i].insert(tkinter.END,toDo_dic[i]) #task_entryへtoDoを出力
         task_entry[i].configure(state="readonly")
+    tkMessageBox.showinfo('完了！',"入力されたタスクを日付順に並び替えました．")
 
 def changePage(page):
     '''
@@ -225,9 +226,9 @@ sort_buttom = tkinter.Button(frame1,text="日付順に並び替え",width=30,com
 sort_buttom.place(x=60, y=420)
 
 
-time = "5:10pm"
+time = "11:20pm"
 
-cronpi.run_every_day("python3 /Users/e195765/Desktop/2年講義/ソフトウェア開発演習/group11/Software_Dev_Group11/nichi/push.py").on(time)
+cronpi.run_every_day("/usr/local/bin/python3.9 /Users/e195765/Desktop/2年講義/ソフトウェア開発演習/group11/Software_Dev_Group11/nichi/push.py").on(time)
 print("タスク終了1日前の{}に通知を送信します．".format(time))
 
 
